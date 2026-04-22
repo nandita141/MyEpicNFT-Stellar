@@ -380,7 +380,7 @@ function App() {
                       <span>Last Updated</span>
                       <strong className="text-blue">Just now ↻</strong>
                     </div>
-                    <a href={`https://stellar.expert/explorer/testnet/contract/${CONTRACT_ID}`} target="_blank" rel="noreferrer" className="btn-dash-outline mt-auto text-center">
+                    <a href={`https://stellar.expert/explorer/testnet/contract/${CONTRACT_ID}`} target="_blank" rel="noreferrer" className="btn-dash-outline mt-3 text-center" style={{fontSize: "0.75rem", padding: "8px"}}>
                       VIEW ON STELLAR EXPERT ↗
                     </a>
                  </div>
@@ -399,9 +399,9 @@ function App() {
                     
                     <div className="qt-result">
                       {!loading && !tokenOwner && !tokenUri && (
-                        <div className="qt-empty">
-                          <div className="spinner-icon">💠</div>
-                          <p>Enter a Token ID to view<br/>card details, metadata,<br/>and current status.</p>
+                        <div className="qt-empty" style={{padding: "1rem", minHeight: "80px"}}>
+                          <div className="spinner-icon mb-2">💠</div>
+                          <p style={{fontSize: "0.8rem", margin: 0}}>Enter a Token ID to view its real-time metadata.</p>
                         </div>
                       )}
                       
@@ -426,8 +426,8 @@ function App() {
                          MINT CARD (ADMIN)
                        </button>
                     </div>
-                    <p className="qm-desc mt-auto text-center">
-                       Create a new Stellar Card NFT<br/>and add it to the blockchain.
+                    <p className="qm-desc mt-3 text-center" style={{fontSize: "0.75rem"}}>
+                       Create a new Stellar Card NFT on the blockchain.
                     </p>
                  </div>
 
