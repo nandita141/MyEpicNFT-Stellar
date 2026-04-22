@@ -21,7 +21,7 @@ createRoot(document.getElementById('root')).render(
     <SorobanReactProvider
       chains={chains}
       connectors={connectors}
-      appName="Stellar Card NFT"
+      appName="My Epic NFT"
       autoconnect
     >
       <App />

@@ -3,7 +3,7 @@ setlocal
 
 REM --- 1. CONFIGURATION ---
 REM This is the public key (G... address) you got from 'stellar keys public-key my_wallet'
-set "ADMIN_ADDRESS=GAFB4VTKSW2X2L7F3ZOA7O2E4BKTQZ5H4VGLSRPXQZKWHQ2D7BCF3UFH"
+set "ADMIN_ADDRESS=GDTDLMOLWN52XRC6BBXFGMRO2ULAADNTOBVIH27EDJSKWKZSD4SKA47P"
 
 REM This is the alias for your wallet from 'stellar keys add my_wallet'
 set "WALLET_SECRET=my_wallet"

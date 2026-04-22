@@ -6,7 +6,8 @@
   "author": "Your Name",
   "license": "ISC",
   "workspaces": [
-    "frontend"
+    "frontend",
+    "packages/*"
   ],
   "scripts": {
     "dev": "npm run dev -w frontend",

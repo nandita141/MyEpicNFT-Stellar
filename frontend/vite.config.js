@@ -14,8 +14,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@stellar_card': path.resolve(__dirname, '../packages/stellar_card/src'),
-      'tslib': path.resolve(__dirname, 'node_modules/tslib'),
     },
+    dedupe: ['react', 'react-dom'],
   },
   optimizeDeps: {
     include: ['@stellar/stellar-sdk', '@soroban-react/core', 'tslib'],
