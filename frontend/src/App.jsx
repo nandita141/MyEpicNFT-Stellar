@@ -85,18 +85,24 @@ function App() {
     if (!client) return;
     try {
       const { result } = await client.total_supply();
-      setTotalSupply(result);
+      const supplyCount = Number(result);
+      setTotalSupply(supplyCount);
       
-      if (address && result > 0) {
+      if (address && supplyCount > 0) {
         setYourCards("Loading...");
-        let count = 0;
-        // Search through all tokens to count balance (works well for testnet)
-        for(let i = 0; i < result; i++) {
-            try {
-               const ownerData = await client.owner_of({ token_id: i });
-               if (ownerData.result === address) count++;
-            } catch (e) {}
+        
+        // Optimize: Fetch all owners in parallel
+        const ownerPromises = [];
+        for(let i = 0; i < supplyCount; i++) {
+          ownerPromises.push(
+            client.owner_of({ token_id: i })
+              .then(res => res.result === address ? 1 : 0)
+              .catch(() => 0) // Ignore individual errors (e.g. non-existent tokens)
+          );
         }
+        
+        const ownerResults = await Promise.all(ownerPromises);
+        const count = ownerResults.reduce((acc, val) => acc + val, 0);
         setYourCards(count);
       } else {
         setYourCards(0);
