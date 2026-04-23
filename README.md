@@ -12,8 +12,10 @@
 ## 📺 Project Demo
 Watch the full system in action, from wallet connection to NFT minting and transferring:
 
-<!-- Replace the link below after uploading your video to GitHub or YouTube -->
 [<img src="image.png" width="800" alt="Watch the Demo" />](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
+
+### 🔗 Video Link ⬇️
+[**Watch the working Demo here**](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
 
 > **Tip:** You can upload your video file directly to this GitHub repository and embed it here using:
 > `![Demo Video](video_path.mp4)`
