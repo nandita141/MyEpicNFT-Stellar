@@ -166,12 +166,8 @@ Metadata format:
 ## 🚢 Deployment
 
 ### Frontend Deployment (Vercel)
+my-epic-nft-stellar-frontend-48b7.vercel.app
 
-1. Set environment variable `VITE_CONTRACT_ID` in Vercel dashboard
-2. Deploy from root directory:
-   ```bash
-   vercel --prod
-   ```
 
 ### 📺 Video Link ⬇️
 [**Watch the working Demo Video here**](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
