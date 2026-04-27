@@ -166,7 +166,8 @@ Metadata format:
 ## 🚢 Deployment
 
 ### Frontend Deployment (Vercel)
-my-epic-nft-stellar-frontend-48b7.vercel.app
+
+https://my-epic-nft-stellar-frontend-48b7.vercel.app
 
 
 ### 📺 Video Link ⬇️
