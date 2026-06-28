@@ -28,6 +28,23 @@ export function CardDisplay({ tokenId, owner, uri, compact = false, onTransfer }
   const [metaLoading, setMetaLoading] = useState(false);
   const [metaError, setMetaError] = useState(null);
   const [flipped, setFlipped] = useState(false);
+  const [tilt, setTilt] = useState({ rx: 0, ry: 0, mx: 50, my: 50, active: false });
+
+  const handleMouseMove = (e) => {
+    if (compact) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const mx = (x / rect.width) * 100;
+    const my = (y / rect.height) * 100;
+    const rx = ((y / rect.height) - 0.5) * -25; // max 12.5deg tilt
+    const ry = ((x / rect.width) - 0.5) * 25;
+    setTilt({ rx, ry, mx, my, active: true });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt((prev) => ({ ...prev, active: false, rx: 0, ry: 0 }));
+  };
 
   useEffect(() => {
     if (!uri) return;
@@ -70,21 +87,29 @@ export function CardDisplay({ tokenId, owner, uri, compact = false, onTransfer }
   }
 
   return (
-    <div className="card-3d-wrapper" onClick={() => setFlipped((f) => !f)}>
-      <div className={`card-3d ${flipped ? "flipped" : ""}`}>
+    <div 
+      className="card-3d-wrapper" 
+      onClick={() => setFlipped((f) => !f)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <div 
+        className={`card-3d ${flipped ? "flipped" : ""}`}
+        style={tilt.active ? { transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) ${flipped ? "rotateY(180deg)" : ""}` } : {}}
+      >
         {/* FRONT */}
         <div
           className="card-face card-front"
           style={{
             borderColor: theme.border,
-            background: theme.bg,
-            boxShadow: `0 8px 32px ${theme.glow}`,
+            background: `linear-gradient(180deg, rgba(255,255,255,0.03) 0%, ${theme.bg} 100%)`,
+            boxShadow: `0 8px 32px ${theme.glow}, inset 0 0 20px ${theme.bg}`,
           }}
         >
           <div className="card-header">
             <span className="card-id">#{tokenId}</span>
             {rarity && (
-              <span className="card-rarity-badge" style={{ background: theme.border }}>
+              <span className="card-rarity-badge" style={{ background: theme.border, boxShadow: `0 0 10px ${theme.border}` }}>
                 {rarity}
               </span>
             )}
@@ -96,11 +121,11 @@ export function CardDisplay({ tokenId, owner, uri, compact = false, onTransfer }
             ) : metaError ? (
               <div className="card-error">📡<br /><small>Metadata unavailable</small></div>
             ) : (
-              <div className="card-emoji-art">{emoji}</div>
+              <div className="card-emoji-art" style={{ filter: `drop-shadow(0 0 20px ${theme.border})` }}>{emoji}</div>
             )}
           </div>
 
-          <div className="card-name">{metadata?.name || (metaLoading ? "Loading…" : "Unknown")}</div>
+          <div className="card-name" style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}>{metadata?.name || (metaLoading ? "Loading…" : "Unknown")}</div>
           {metadata?.description && (
             <p className="card-desc">{metadata.description}</p>
           )}
@@ -115,6 +140,19 @@ export function CardDisplay({ tokenId, owner, uri, compact = false, onTransfer }
           <div className="card-footer">
             <span className="card-flip-hint">Click to flip</span>
           </div>
+          
+          {/* Glare and Foil Overlays */}
+          <div 
+            className="card-glare" 
+            style={{ 
+              "--mx": `${tilt.mx}%`, 
+              "--my": `${tilt.my}%`, 
+              "--glare-op": tilt.active && !flipped ? 1 : 0 
+            }} 
+          />
+          {(rarity === "Legendary" || rarity === "Epic") && (
+            <div className="foil-fx" />
+          )}
         </div>
 
         {/* BACK */}

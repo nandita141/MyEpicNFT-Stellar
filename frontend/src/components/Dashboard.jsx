@@ -201,7 +201,7 @@ export function Dashboard() {
 
 // ── Sub-components ──────────────────────────────────────────────────────────
 
-function StatCard({ label, value, sub, subClass, color, icon, graph, line, fillColor, strokeColor }) {
+function StatCard({ label, value, sub, subClass, color, icon, graph, line, strokeColor }) {
   return (
     <div className={`stat-card ${color}`}>
       <div>
@@ -212,8 +212,18 @@ function StatCard({ label, value, sub, subClass, color, icon, graph, line, fillC
       <div className="sc-icon" aria-hidden="true">{icon}</div>
       <div className="sc-graph">
         <svg viewBox="0 0 100 30" aria-hidden="true">
-          <path d={graph} fill={fillColor} />
-          <path d={line} fill="none" stroke={strokeColor} strokeWidth="2" />
+          <defs>
+            <linearGradient id={`grad-${color}`} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor={strokeColor} stopOpacity="0.2" />
+              <stop offset="100%" stopColor={strokeColor} stopOpacity="0.8" />
+            </linearGradient>
+            <filter id={`glow-${color}`} x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+          <path d={graph} fill={`url(#grad-${color})`} />
+          <path d={line} fill="none" stroke={strokeColor} strokeWidth="2" filter={`url(#glow-${color})`} />
         </svg>
       </div>
     </div>

@@ -35,8 +35,8 @@ export function Sidebar({ walletAddress, onConnect, onDisconnect }) {
 
       <aside className={`sidebar-main ${sidebarOpen ? "sidebar-open" : ""}`} aria-label="Main navigation">
         <div className="sidebar-logo">
-          <div className="logo-box">🎴</div>
-          <h3>My Epic NFT</h3>
+          <div className="logo-box" style={{ background: "linear-gradient(135deg, var(--accent-purple), var(--accent-teal))", boxShadow: "0 0 15px var(--accent-glow)" }}>🎴</div>
+          <h3 style={{ fontFamily: "var(--font-display)", fontWeight: 700, letterSpacing: "-0.02em", background: "linear-gradient(90deg, #fff, var(--accent-teal))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>StellarCard</h3>
           <button
             className="sidebar-close-btn"
             onClick={() => setSidebarOpen(false)}

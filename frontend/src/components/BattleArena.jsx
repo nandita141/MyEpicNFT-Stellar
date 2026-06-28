@@ -36,6 +36,12 @@ export function BattleArena() {
   const [hpB, setHpB]                 = useState(MAX_HP);
   const [metaCache, setMetaCache]     = useState({});
 
+  // Animation states
+  const [animA, setAnimA] = useState("");
+  const [animB, setAnimB] = useState("");
+  const [dmgA, setDmgA]   = useState(null);
+  const [dmgB, setDmgB]   = useState(null);
+
   useEffect(() => {
     if (!walletAddress) return;
     setLoadingCards(true);
@@ -83,14 +89,35 @@ export function BattleArena() {
 
     // Animate rounds
     for (let i = 0; i < log.length; i++) {
-      await new Promise((r) => setTimeout(r, 500));
       const entry = log[i];
-      setHpA(entry.hpA);
+      
+      // A attacks B
+      setAnimA("lunge-right-active");
+      setBattleLog((prev) => [...prev, `Round ${entry.round}: ${cardA.emoji} attacks for ${entry.dmgToB} dmg!`]);
+      await new Promise((r) => setTimeout(r, 200));
+      
+      setAnimB("shake-active");
+      setDmgB(`-${entry.dmgToB}`);
       setHpB(entry.hpB);
-      setBattleLog((prev) => [
-        ...prev,
-        `Round ${entry.round}: ${cardA.emoji} deals ${entry.dmgToB} dmg | ${cardB.emoji} deals ${entry.dmgToA} dmg`,
-      ]);
+      await new Promise((r) => setTimeout(r, 500));
+      
+      setAnimA(""); setAnimB(""); setDmgB(null);
+      if (entry.hpB <= 0) break;
+      
+      await new Promise((r) => setTimeout(r, 200));
+
+      // B attacks A
+      setAnimB("lunge-left-active");
+      setBattleLog((prev) => [...prev, `${cardB.emoji} counter-attacks for ${entry.dmgToA} dmg!`]);
+      await new Promise((r) => setTimeout(r, 200));
+      
+      setAnimA("shake-active");
+      setDmgA(`-${entry.dmgToA}`);
+      setHpA(entry.hpA);
+      await new Promise((r) => setTimeout(r, 500));
+      
+      setAnimB(""); setAnimA(""); setDmgA(null);
+      await new Promise((r) => setTimeout(r, 200));
     }
 
     const finalHpA = log[log.length - 1]?.hpA ?? MAX_HP;
@@ -107,6 +134,10 @@ export function BattleArena() {
     setBattleLog([]);
     setHpA(MAX_HP);
     setHpB(MAX_HP);
+    setAnimA("");
+    setAnimB("");
+    setDmgA(null);
+    setDmgB(null);
   };
 
   if (!walletAddress) {
@@ -163,7 +194,11 @@ export function BattleArena() {
           {/* Battle Stage */}
           {selectedA && selectedB && (
             <div className="battle-stage">
-              <BattleFighter card={selectedA} meta={metaCache[selectedA.token_id]} hp={hpA} maxHp={MAX_HP} side="left" winner={result === "A"} loser={result === "B"} />
+              <BattleFighter 
+                card={selectedA} meta={metaCache[selectedA.token_id]} hp={hpA} maxHp={MAX_HP} 
+                side="left" winner={result === "A"} loser={result === "B"} 
+                animClass={animA} dmgText={dmgA}
+              />
               <div className="battle-middle">
                 {!result && !battling && (
                   <button id="start-battle-btn" className="btn-battle" onClick={doBattle}>
@@ -185,7 +220,11 @@ export function BattleArena() {
                   </div>
                 )}
               </div>
-              <BattleFighter card={selectedB} meta={metaCache[selectedB.token_id]} hp={hpB} maxHp={MAX_HP} side="right" winner={result === "B"} loser={result === "A"} />
+              <BattleFighter 
+                card={selectedB} meta={metaCache[selectedB.token_id]} hp={hpB} maxHp={MAX_HP} 
+                side="right" winner={result === "B"} loser={result === "A"} 
+                animClass={animB} dmgText={dmgB}
+              />
             </div>
           )}
 
@@ -232,28 +271,45 @@ function CardSelector({ label, cards, selected, exclude, onSelect, metaCache }) 
   );
 }
 
-function BattleFighter({ card, meta, hp, maxHp, side, winner, loser }) {
+function BattleFighter({ card, meta, hp, maxHp, side, winner, loser, animClass, dmgText }) {
   const data = getCardData(meta);
   const hpPct = Math.max(0, Math.round((hp / maxHp) * 100));
-  const hpColor = hpPct > 60 ? "#48BB78" : hpPct > 30 ? "#ED8936" : "#FC8181";
+  const hpColor = hpPct > 60 ? "#10b981" : hpPct > 30 ? "#f59e0b" : "#ef4444";
 
   return (
-    <div className={`battle-fighter ${winner ? "winner-glow" : ""} ${loser ? "loser-fade" : ""}`}>
-      <div className="fighter-emoji" style={{ filter: `drop-shadow(0 0 16px ${data.color})` }}>
-        {data.emoji}
-      </div>
-      <div className="fighter-name">{meta?.name || `Card #${card.token_id}`}</div>
-      <div className="fighter-rarity" style={{ color: data.color }}>{data.rarity}</div>
-      <div className="fighter-stats">
-        <span>⚔️ {data.attack}</span>
-        <span>🛡️ {data.defense}</span>
-      </div>
-      <div className="hp-bar-wrap">
-        <div className="hp-label">HP {hp}/{maxHp}</div>
-        <div className="hp-bar-track">
-          <div className="hp-bar-fill" style={{ width: `${hpPct}%`, background: hpColor }} />
+    <div style={{ position: "relative" }}>
+      <div 
+        className={`battle-fighter ${winner ? "winner-glow" : ""} ${loser ? "loser-fade" : ""} ${animClass}`}
+        style={{
+          background: winner ? `radial-gradient(circle at center, rgba(246,173,85,0.2) 0%, rgba(255,255,255,0.03) 100%)` : `rgba(255,255,255,0.03)`,
+          transform: winner ? "scale(1.05)" : loser ? "scale(0.95)" : "scale(1)",
+          boxShadow: winner ? `0 0 40px ${data.color}` : "none",
+          borderColor: winner ? data.color : "var(--border)"
+        }}
+      >
+        <div className="fighter-emoji" style={{ filter: `drop-shadow(0 0 20px ${data.color})` }}>
+          {data.emoji}
+        </div>
+        <div className="fighter-name" style={{ fontFamily: "var(--font-display)", letterSpacing: "0.02em" }}>{meta?.name || `Card #${card.token_id}`}</div>
+        <div className="fighter-rarity" style={{ color: data.color }}>{data.rarity}</div>
+        <div className="fighter-stats">
+          <span>⚔️ {data.attack}</span>
+          <span>🛡️ {data.defense}</span>
+        </div>
+        <div className="hp-bar-wrap mt-3">
+          <div className="hp-label" style={{ fontFamily: "var(--font-display)" }}>HP {hp}/{maxHp}</div>
+          <div className="hp-bar-track">
+            <div className="hp-bar-fill" style={{ width: `${hpPct}%`, background: hpColor, boxShadow: `0 0 10px ${hpColor}` }} />
+          </div>
         </div>
       </div>
+      
+      {/* Floating Damage Text Overlay */}
+      {dmgText && (
+        <div className="floating-dmg-container">
+          <div className="floating-dmg">{dmgText}</div>
+        </div>
+      )}
     </div>
   );
 }
