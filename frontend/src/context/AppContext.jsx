@@ -17,6 +17,10 @@ export function AppProvider({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const toastIdRef = useRef(0);
 
+  const removeToast = useCallback((id) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, []);
+
   /** Add a toast notification. type: 'success' | 'error' | 'info' | 'warning' */
   const addToast = useCallback((message, type = "info", duration = 5000) => {
     const id = ++toastIdRef.current;
@@ -25,11 +29,7 @@ export function AppProvider({ children }) {
       setTimeout(() => removeToast(id), duration);
     }
     return id;
-  }, []);
-
-  const removeToast = useCallback((id) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
-  }, []);
+  }, [removeToast]);
 
   const toggleTheme = useCallback(() => {
     setTheme((t) => (t === "dark" ? "light" : "dark"));
@@ -50,6 +50,7 @@ export function AppProvider({ children }) {
 }
 
 /** Hook to consume global app context */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useApp() {
   const ctx = useContext(AppContext);
   if (!ctx) throw new Error("useApp must be used inside <AppProvider>");

@@ -53,8 +53,6 @@ export function BatchMint() {
     }
   };
 
-  const totalCost = count * 0; // Testnet — free!
-
   return (
     <div className="page-container">
       <div className="page-header">

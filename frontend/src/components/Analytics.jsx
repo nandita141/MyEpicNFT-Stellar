@@ -17,7 +17,7 @@ export function Analytics() {
   const [cards, setCards]         = useState([]);
   const [loading, setLoading]     = useState(false);
   const [metaMap, setMetaMap]     = useState({});
-  const [metaLoading, setMetaLoading] = useState(false);
+
 
   const fetchAll = useCallback(async () => {
     if (!walletAddress) return;
@@ -25,7 +25,6 @@ export function Analytics() {
     try {
       const myCards = await getMyCards();
       setCards(myCards);
-      setMetaLoading(true);
       const fetches = myCards.map(async (c) => {
         if (!c.uri) return [c.token_id, null];
         try {
@@ -42,7 +41,6 @@ export function Analytics() {
       setMetaMap(Object.fromEntries(results));
     } finally {
       setLoading(false);
-      setMetaLoading(false);
     }
   }, [walletAddress, getMyCards]);
 

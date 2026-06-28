@@ -31,7 +31,7 @@ export function MyCollection() {
 
   useEffect(() => { fetchCards(); }, [fetchCards]);
 
-  const handleTransfer = (tokenId) => {
+  const handleTransfer = () => {
     setActiveMenu("Transfer Card");
   };
 

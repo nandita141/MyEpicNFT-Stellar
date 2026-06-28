@@ -59,9 +59,12 @@ export function BattleArena() {
             const meta = await r.json();
             setMetaCache((prev) => ({ ...prev, [c.token_id]: meta }));
           }
-        } catch {}
+        } catch (e) {
+          void e; // ignore
+        }
       });
     }).finally(() => setLoadingCards(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [walletAddress]);
 
   const doBattle = async () => {
@@ -196,7 +199,7 @@ export function BattleArena() {
             <div className="battle-stage">
               <BattleFighter 
                 card={selectedA} meta={metaCache[selectedA.token_id]} hp={hpA} maxHp={MAX_HP} 
-                side="left" winner={result === "A"} loser={result === "B"} 
+                winner={result === "A"} loser={result === "B"} 
                 animClass={animA} dmgText={dmgA}
               />
               <div className="battle-middle">
@@ -222,7 +225,7 @@ export function BattleArena() {
               </div>
               <BattleFighter 
                 card={selectedB} meta={metaCache[selectedB.token_id]} hp={hpB} maxHp={MAX_HP} 
-                side="right" winner={result === "B"} loser={result === "A"} 
+                winner={result === "B"} loser={result === "A"} 
                 animClass={animB} dmgText={dmgB}
               />
             </div>
@@ -271,7 +274,7 @@ function CardSelector({ label, cards, selected, exclude, onSelect, metaCache }) 
   );
 }
 
-function BattleFighter({ card, meta, hp, maxHp, side, winner, loser, animClass, dmgText }) {
+function BattleFighter({ card, meta, hp, maxHp, winner, loser, animClass, dmgText }) {
   const data = getCardData(meta);
   const hpPct = Math.max(0, Math.round((hp / maxHp) * 100));
   const hpColor = hpPct > 60 ? "#10b981" : hpPct > 30 ? "#f59e0b" : "#ef4444";

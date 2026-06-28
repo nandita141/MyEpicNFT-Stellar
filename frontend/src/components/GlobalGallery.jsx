@@ -55,8 +55,10 @@ export function GlobalGallery() {
           const meta = await r.json();
           setMetaMap((prev) => ({ ...prev, [c.token_id]: meta }));
         }
-      } catch {}
-    });
+      } catch (e) {
+        // ignore
+      }
+      });
   }, [contract, totalSupply, metaMap]);
 
   useEffect(() => { loadPage(page); }, [page, contract, totalSupply]); // eslint-disable-line
