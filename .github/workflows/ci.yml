@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: StellarCard/contracts
+        working-directory: contracts
 
     steps:
       - name: Checkout repository
@@ -36,7 +36,7 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            StellarCard/contracts/target
+            contracts/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
 
@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: stellar-card-wasm
-          path: StellarCard/contracts/target/wasm32v1-none/release/stellar_card_contract.wasm
+          path: contracts/target/wasm32v1-none/release/stellar_card_contract.wasm
           retention-days: 7
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -61,7 +61,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: StellarCard/frontend
+        working-directory: frontend
 
     steps:
       - name: Checkout repository
@@ -81,7 +81,7 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: StellarCard
+        working-directory: .
 
       - name: Run ESLint
         run: npm run lint
@@ -104,7 +104,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-dist
-          path: StellarCard/frontend/dist
+          path: frontend/dist
           retention-days: 7
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -133,14 +133,14 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-        working-directory: StellarCard
+        working-directory: .
 
       - name: Deploy to Vercel Production
         run: |
           vercel deploy \
             --prod \
             --token=${{ secrets.VERCEL_TOKEN }} \
-            --cwd StellarCard/frontend \
+            --cwd frontend \
             --build-env VITE_CONTRACT_ID=${{ secrets.VITE_CONTRACT_ID }} \
             --build-env VITE_RPC_URL=https://soroban-testnet.stellar.org:443 \
             --build-env VITE_NETWORK=testnet
