@@ -1,98 +1,201 @@
 # 🎴 MyEpicNFT-Stellar
 
+[![CI/CD](https://github.com/nandita141/MyEpicNFT-Stellar/actions/workflows/ci.yml/badge.svg)](https://github.com/nandita141/MyEpicNFT-Stellar/actions)
 [![Stellar](https://img.shields.io/badge/Network-Stellar-blue.svg)](https://stellar.org)
 [![Soroban](https://img.shields.io/badge/Smart%20Contract-Soroban/Rust-orange.svg)](https://soroban.stellar.org)
 [![React](https://img.shields.io/badge/Frontend-React/Vite-61dafb.svg)](https://reactjs.org)
 [![License: ISC](https://img.shields.io/badge/License-ISC-green.svg)](https://opensource.org/licenses/ISC)
 
-**MyEpicNFT-Stellar** is a premium, full-stack NFT collectible card game built on the **Stellar/Soroban** ecosystem. It features a robust Rust smart contract and a modern, glassmorphism-inspired React dashboard for seamless interaction with the blockchain.
+**MyEpicNFT-Stellar** is a production-ready, full-stack NFT collectible card game built on the **Stellar/Soroban** ecosystem. It features an advanced Rust smart contract with inter-contract marketplace communication, a mobile-responsive React dashboard with real-time event streaming, comprehensive tests, and a CI/CD pipeline.
 
 ---
 
 ## 📺 Project Demo
-Watch the full system in action, from wallet connection to NFT minting and transferring:
 
-[<img src="image.png" width="800" alt="Watch the Demo" />](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
+[![Watch the Demo](image.png)](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
 
-### 🔗 Video Link ⬇️
-[**Watch the working Demo here**](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
+### 🔗 [Watch the working Demo here](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
 
-> **Tip:** You can upload your video file directly to this GitHub repository and embed it here using:
-> `![Demo Video](video_path.mp4)`
+### 🚀 [Live App on Vercel](https://my-epic-nft-stellar-frontend-48b7.vercel.app)
 
 ---
 
 ## ✨ Key Features
 
-- **🚀 Instant Minting**: Public minting function with randomized card assignment.
-- **🛡️ Admin Controls**: Dedicated admin minting for specific URIs and restricted initialization.
-- **📊 Interactive Dashboard**: Real-time stats showing total supply, owned cards, and network status.
-- **🔍 Token Explorer**: Deep-link integration with Stellar Expert and on-chain metadata querying.
-- **🔁 Asset Transfer**: Secure peer-to-peer NFT transfers directly from the UI.
-- **💎 Premium UI**: Sleek dark/light mode with glassmorphism design and smooth animations.
+| Feature | Description |
+|---|---|
+| 🚀 **Instant Minting** | Public mint with randomized card assignment |
+| 🛡️ **Admin Controls** | Admin mint for specific URIs |
+| 🔥 **Burn** | Owners can permanently destroy cards |
+| ✅ **Approve / Delegate** | Approve a spender for marketplace use |
+| 🏪 **Marketplace Contract** | Inter-contract cross-call for buying/selling cards |
+| 📡 **Event Streaming** | Real-time contract event log polled from Stellar RPC |
+| 📊 **Interactive Dashboard** | Real-time stats, contract overview, token query |
+| 🃏 **My Collection** | 3D flip-card gallery of all owned NFTs |
+| 🔁 **Asset Transfer** | Secure peer-to-peer transfers from the UI |
+| 💎 **Responsive UI** | Mobile-first glassmorphism design with dark/light mode |
+| 🧪 **Full Test Suite** | Rust integration tests + Vitest frontend tests |
+| 🔄 **CI/CD** | GitHub Actions: test + build + Vercel deploy |
+
+---
+
+## 🏗️ Architecture
+
+```mermaid
+graph TD
+    User["👤 User / Freighter Wallet"]
+    FE["⚛️ React Frontend (Vite)"]
+    RPC["🌐 Stellar Soroban RPC"]
+    NFT["📄 NFT Contract (Rust)"]
+    MKT["🏪 Marketplace Contract (Rust)"]
+    IPFS["🗄️ IPFS (Metadata)"]
+
+    User -- "signTransaction" --> FE
+    FE -- "Client SDK calls" --> RPC
+    RPC -- "invoke" --> NFT
+    NFT -- "cross-contract call" --> MKT
+    MKT -- "approve / transfer" --> NFT
+    FE -- "getEvents poll" --> RPC
+    FE -- "fetch metadata" --> IPFS
+```
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Smart Contract**: Soroban (Rust)
-- **Frontend**: React.js, Vite, Vanilla CSS
-- **Wallet Integration**: Freighter Wallet (@stellar/freighter-api)
-- **Metadata Storage**: IPFS
-- **Blockchain**: Stellar Testnet
+| Layer | Technology |
+|---|---|
+| Smart Contract | Soroban SDK (Rust) |
+| Inter-contract | Soroban `contractclient` macro |
+| Frontend | React 18 + Vite |
+| Styling | Vanilla CSS (glassmorphism, responsive) |
+| Wallet | Freighter Wallet API |
+| Metadata | IPFS |
+| Blockchain | Stellar Testnet |
+| Tests | `cargo test` (Rust) + Vitest (React) |
+| CI/CD | GitHub Actions + Vercel |
+
+---
+
+## 📄 Contract API Reference
+
+### NFT Contract — `CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4`
+
+#### Write Functions (require wallet signature)
+
+| Function | Arguments | Returns | Description |
+|---|---|---|---|
+| `initialize` | `admin: Address` | — | One-time setup. Sets admin. |
+| `admin_mint` | `to: Address, uri: String` | `u64` (token ID) | Admin mints specific card. |
+| `public_mint` | `to: Address` | `u64` (token ID) | Anyone mints a random card. |
+| `transfer` | `from, to: Address, token_id: u64` | — | Transfer card ownership. |
+| `burn` | `owner: Address, token_id: u64` | — | Permanently destroy a card. |
+| `approve` | `owner, spender: Address, token_id: u64` | — | Delegate transfer to spender. |
+
+#### Read-Only Functions (free, no signature)
+
+| Function | Arguments | Returns | Description |
+|---|---|---|---|
+| `total_supply` | — | `u64` | Total cards ever minted. |
+| `owner_of` | `token_id: u64` | `Address` | Get owner of a token. |
+| `token_uri` | `token_id: u64` | `String` | Get metadata URI. |
+| `is_burned` | `token_id: u64` | `bool` | Check if token was burned. |
+| `get_approved` | `token_id: u64` | `Option<Address>` | Get approved spender. |
+| `get_card_info` | `token_id: u64` | `CardInfo` | Batch: owner + uri + burned. |
+
+#### Contract Events
+
+| Event | Topics | Data |
+|---|---|---|
+| `mint` | `("mint", to)` | `token_id: u64` |
+| `transfer` | `("transfer", from, to)` | `token_id: u64` |
+| `burn` | `("burn", owner)` | `token_id: u64` |
+| `approve` | `("approve", owner, spender)` | `token_id: u64` |
+
+### Marketplace Contract (Inter-Contract)
+
+| Function | Description |
+|---|---|
+| `initialize(admin, nft_contract)` | Setup marketplace with NFT contract address |
+| `list_card(seller, token_id, price_stroops)` | List card for sale (calls NFT `approve`) |
+| `buy_card(buyer, token_id, xlm_token)` | Buy card — transfers XLM + calls NFT `transfer` |
+| `cancel_listing(seller, token_id)` | Delist a card |
+| `get_listing(token_id)` | Read listing details |
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Prerequisites
+### Prerequisites
 - [Stellar CLI](https://developers.stellar.org/docs/tools/stellar-cli)
-- [Rust & Cargo](https://www.rust-lang.org/tools/install)
-- [Node.js (v18+)](https://nodejs.org/) & `pnpm`
+- [Rust + Cargo](https://www.rust-lang.org/tools/install) with `wasm32v1-none` target
+- [Node.js v18+](https://nodejs.org/) & `pnpm`
 - [Freighter Wallet](https://freighter.app/) extension
 
-### 2. Smart Contract Setup
+### 1. Smart Contract — Build & Test
 ```bash
-cd contracts
-# Build the contract
+cd StellarCard/contracts
+
+# Run all integration tests
+cargo test --features testutils
+
+# Build WASM
 stellar contract build
-# Run tests
-cargo test
 ```
 
-### 3. Frontend Setup
+### 2. Frontend — Install & Run
 ```bash
-cd frontend
-# Install dependencies
+cd StellarCard/frontend
+
+# Copy env vars
+cp .env.example .env
+# Edit .env with your contract ID
+
 pnpm install
-# Start development server
 pnpm dev
 ```
 
+### 3. Frontend Tests
+```bash
+cd StellarCard/frontend
+pnpm test          # watch mode
+pnpm test:run      # single run (for CI)
+```
+
 ### 4. Deployment
-The frontend is optimized for **Vercel** deployment. Ensure you set the `VITE_CONTRACT_ID` environment variable.
+The frontend deploys automatically to **Vercel** on push to `main` via GitHub Actions.
 
----
-
-## 📄 Contract Information
-
-- **Contract ID**: `CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4`
-- **Standard**: Custom NFT Implementation (Soroban)
-- **Network**: Stellar Testnet
+Required GitHub Secrets:
+- `VERCEL_TOKEN` — from Vercel dashboard
+- `VITE_CONTRACT_ID` — your deployed contract ID
 
 ---
 
 ## 📦 Project Structure
 
-```text
+```
 StellarCard/
-├── contracts/          # Soroban smart contract (Rust)
-│   ├── src/            # lib.rs & nft_card logic
-│   └── tests/          # Integration tests
-├── frontend/           # React + Vite application
-│   └── src/            # Dashboard & UI components
-├── ipfs/               # NFT Metadata samples
-└── scripts/            # Deployment & automation tools
+├── .github/
+│   └── workflows/
+│       └── ci.yml              # CI/CD: test + build + deploy
+├── contracts/
+│   └── src/
+│       ├── lib.rs              # NFT contract (events, burn, approve)
+│       ├── nft_card.rs         # DataKey & CardInfo types
+│       ├── marketplace.rs      # Inter-contract marketplace
+│       └── tests.rs            # 10 Rust integration tests
+├── frontend/
+│   ├── src/
+│   │   ├── components/         # Sidebar, Header, Dashboard, Cards, ...
+│   │   ├── context/            # AppContext (wallet, toasts, theme)
+│   │   ├── hooks/              # useContract, useEventStream
+│   │   ├── tests/              # Vitest unit tests
+│   │   ├── config.js           # Centralized env config
+│   │   └── App.jsx             # Slim orchestrator
+│   ├── .env.example
+│   └── vite.config.js
+├── packages/stellar_card/      # Contract client SDK
+└── scripts/                    # Deploy & mint .bat scripts
 ```
 
 ---
@@ -100,107 +203,16 @@ StellarCard/
 ## 🤝 Contributing
 Contributions are welcome! Feel free to open an issue or submit a pull request.
 
-### Read-Only Functions
-
-- `total_supply()` → `u64`: Get total number of cards minted
-- `owner_of(token_id: u64)` → `Address`: Get owner of a specific card
-- `token_uri(token_id: u64)` → `String`: Get metadata URI for a card
-
-### State-Changing Functions
-
-- `initialize(admin: Address)`: Initialize the contract (admin only)
-- `admin_mint(to: Address, uri: String)` → `u64`: Admin mint a card with specific URI
-- `public_mint(to: Address)`: Public mint a random card
-- `transfer(from: Address, to: Address, token_id: u64)`: Transfer a card
-
-## 🛠️ Development
-
-### Build Contract
-```bash
-cd contracts
-stellar contract build
-```
-
-### Test Contract
-```bash
-cd contracts
-cargo test
-```
-
-### Run Frontend
-```bash
-cd frontend
-pnpm install
-pnpm dev
-```
-
-### Build Frontend
-```bash
-cd frontend
-pnpm build
-```
-
-## 📝 Scripts
-
-- `scripts/deploy_contract.bat`: Deploy contract to testnet
-- `scripts/mint_sample_cards.bat`: Mint sample cards (Fire Dragon, Ice Mage, Stone Warrior)
-- `scripts/test_contracts.bat`: Run contract tests
-
-## 🌐 IPFS Metadata
-
-Card metadata is stored on IPFS. Sample cards include:
-
-- **Fire Dragon**: Epic rarity, 90 Attack, 75 Defense
-- **Ice Mage**: Rare rarity, 70 Attack, 85 Defense
-- **Stone Warrior**: Common rarity, 60 Attack, 90 Defense
-
-Metadata format:
-
-```json
-{
-  "name": "Card Name",
-  "description": "Card description",
-  "image": "ipfs://...",
-  "attributes": [
-    {
-      "trait_type": "Rarity",
-      "value": "Epic"
-    },
-    {
-      "trait_type": "Attack",
-      "value": "90"
-    }
-  ]
-}
-```
-
-## 🚢 Deployment
-
-### Frontend Deployment (Vercel)
-
-https://my-epic-nft-stellar-frontend-48b7.vercel.app
-
-## DApp Interface Screenshot
-<img width="1887" height="857" alt="Screenshot 2026-04-28 164937" src="https://github.com/user-attachments/assets/ea7515d7-3510-48b0-9e50-bdf3052aea9f" />
-<img width="1914" height="875" alt="Screenshot 2026-04-28 165006" src="https://github.com/user-attachments/assets/0d77f260-efec-4ef6-8c54-6ce2dd5a9be7" />
-<img width="1919" height="805" alt="Screenshot 2026-04-28 165022" src="https://github.com/user-attachments/assets/2d41db6d-7665-4803-9589-bd1c743a9f2a" />
-<img width="1902" height="854" alt="Screenshot 2026-04-28 165038" src="https://github.com/user-attachments/assets/b37d47a4-656e-4ca7-be2b-b720d4e44a88" />
-
-
-
-### 📺 Video Link ⬇️
-[**Watch the working Demo Video here**](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
-
-## 📚 Resources
-
-- [Stellar Documentation](https://developers.stellar.org/)
-- [Soroban Documentation](https://soroban.stellar.org/docs)
-- [Freighter Wallet](https://freighter.app/)
-- [Stellar Expert](https://stellar.expert/)
-
 ## 📄 License
-This project is licensed under the **ISC License**.
+Licensed under the **ISC License**.
 
 ## 👤 Author
 **Nandita**
 - GitHub: [@nandita141](https://github.com/nandita141)
+- Live App: [Vercel Deploy](https://my-epic-nft-stellar-frontend-48b7.vercel.app)
+
+## 📚 Resources
+- [Stellar Documentation](https://developers.stellar.org/)
+- [Soroban Documentation](https://soroban.stellar.org/docs)
+- [Freighter Wallet](https://freighter.app/)
+- [Stellar Expert](https://stellar.expert/)
