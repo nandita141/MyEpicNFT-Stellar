@@ -39,7 +39,7 @@ export function FuseCards() {
           setMetaCache((prev) => ({ ...prev, [c.token_id]: meta }));
         }
       } catch (e) {
-        // ignore
+        void e; // ignore
       }
     });
   }, [walletAddress, getMyCards]); // eslint-disable-line
@@ -66,7 +66,7 @@ export function FuseCards() {
       setCardA(null);
       setCardB(null);
     } catch (e) {
-      // Simulate local fusion for demo (contract not yet re-deployed)
+      void e; // Simulate local fusion for demo (contract not yet re-deployed)
       addToast("🔮 Fusion simulated! (Deploy updated contract to use on-chain fuse)", "info", 7000);
       setFusedId("demo");
     } finally {

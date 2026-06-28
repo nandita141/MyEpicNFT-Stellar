@@ -56,7 +56,7 @@ export function GlobalGallery() {
           setMetaMap((prev) => ({ ...prev, [c.token_id]: meta }));
         }
       } catch (e) {
-        // ignore
+        void e; // ignore
       }
       });
   }, [contract, totalSupply, metaMap]);
