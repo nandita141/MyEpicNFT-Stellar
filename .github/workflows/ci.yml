@@ -72,38 +72,29 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-
-      - name: Get pnpm store path
-        id: pnpm-cache
-        run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Cache pnpm store
+      - name: Cache npm dependencies
         uses: actions/cache@v4
         with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-pnpm-
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
         working-directory: StellarCard
 
       - name: Run ESLint
-        run: pnpm lint
+        run: npm run lint
 
       - name: Run Vitest unit tests
-        run: pnpm test --run
+        run: npm test --run
         env:
           VITE_CONTRACT_ID: ${{ secrets.VITE_CONTRACT_ID || 'CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4' }}
           VITE_RPC_URL: https://soroban-testnet.stellar.org:443
           VITE_NETWORK: testnet
 
       - name: Build production bundle
-        run: pnpm build
+        run: npm run build
         env:
           VITE_CONTRACT_ID: ${{ secrets.VITE_CONTRACT_ID || 'CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4' }}
           VITE_RPC_URL: https://soroban-testnet.stellar.org:443
@@ -137,16 +128,11 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
         working-directory: StellarCard
 
       - name: Deploy to Vercel Production
