@@ -18,6 +18,13 @@ import { AdminMint }      from "./components/AdminMint";
 import { TransferCard }   from "./components/TransferCard";
 import { MyCollection }   from "./components/MyCollection";
 import { EventLog }       from "./components/EventLog";
+import { BattleArena }    from "./components/BattleArena";
+import { Analytics }      from "./components/Analytics";
+import { GlobalGallery }  from "./components/GlobalGallery";
+import { BatchMint }      from "./components/BatchMint";
+import { FuseCards }      from "./components/FuseCards";
+import { ActivityFeed }   from "./components/ActivityFeed";
+import { ShareCard }      from "./components/ShareCard";
 
 import "./App.css";
 
@@ -106,10 +113,17 @@ function AppInner() {
   const PAGES = {
     "Dashboard":    <Dashboard />,
     "Mint New Card":<MintCard />,
+    "Batch Mint":   <BatchMint />,
     "My Collection":<MyCollection />,
     "Transfer Card":<TransferCard />,
     "Admin Mint":   <AdminMint />,
     "Event Log":    <EventLog />,
+    "Battle Arena": <BattleArena />,
+    "Analytics":    <Analytics />,
+    "Gallery":      <GlobalGallery />,
+    "Fuse Cards":   <FuseCards />,
+    "Activity Feed":<ActivityFeed />,
+    "Share Card":   <ShareCard />,
   };
 
   return (

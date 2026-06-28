@@ -1,12 +1,19 @@
 import { useApp } from "../context/AppContext";
 
 const NAV_ITEMS = [
-  { label: "Dashboard",    icon: "📊" },
-  { label: "Mint New Card",icon: "➕" },
-  { label: "My Collection",icon: "🃏" },
-  { label: "Transfer Card",icon: "🔁" },
-  { label: "Admin Mint",   icon: "⚙️" },
-  { label: "Event Log",    icon: "📡" },
+  { label: "Dashboard",    icon: "📊", group: "main"     },
+  { label: "Mint New Card",icon: "➕", group: "main"     },
+  { label: "Batch Mint",   icon: "⚡", group: "main"     },
+  { label: "My Collection",icon: "🃏", group: "main"     },
+  { label: "Transfer Card",icon: "🔁", group: "main"     },
+  { label: "Admin Mint",   icon: "⚙️", group: "main"     },
+  { label: "Battle Arena", icon: "⚔️", group: "advanced" },
+  { label: "Fuse Cards",   icon: "🔮", group: "advanced" },
+  { label: "Analytics",    icon: "📈", group: "advanced" },
+  { label: "Gallery",      icon: "🌐", group: "advanced" },
+  { label: "Activity Feed",icon: "🕒", group: "advanced" },
+  { label: "Share Card",   icon: "📤", group: "advanced" },
+  { label: "Event Log",    icon: "📡", group: "advanced" },
 ];
 
 /**
@@ -40,7 +47,21 @@ export function Sidebar({ walletAddress, onConnect, onDisconnect }) {
         </div>
 
         <nav className="sidebar-nav" role="navigation">
-          {NAV_ITEMS.map(({ label, icon }) => (
+          <div className="sidebar-group-label">Core</div>
+          {NAV_ITEMS.filter((i) => i.group === "main").map(({ label, icon }) => (
+            <button
+              key={label}
+              id={`nav-${label.replace(/\s+/g, "-").toLowerCase()}`}
+              className={`sidebar-item ${activeMenu === label ? "active" : ""}`}
+              onClick={() => { setActiveMenu(label); setSidebarOpen(false); }}
+              aria-current={activeMenu === label ? "page" : undefined}
+            >
+              <span className="sb-icon" aria-hidden="true">{icon}</span>
+              <span className="sb-label">{label}</span>
+            </button>
+          ))}
+          <div className="sidebar-group-label" style={{ marginTop: "1rem" }}>Advanced</div>
+          {NAV_ITEMS.filter((i) => i.group === "advanced").map(({ label, icon }) => (
             <button
               key={label}
               id={`nav-${label.replace(/\s+/g, "-").toLowerCase()}`}

@@ -1,6 +1,16 @@
 #![allow(dead_code)]
 use soroban_sdk::contracttype;
 
+/// Card rarity tier
+#[contracttype]
+#[derive(Clone, PartialEq, Eq)]
+pub enum CardTier {
+    Common,
+    Rare,
+    Epic,
+    Legendary,
+}
+
 /// Keys for all contract storage slots.
 #[contracttype]
 #[derive(Clone)]
@@ -17,6 +27,10 @@ pub enum DataKey {
     Approved(u64),
     /// Whether a given token has been burned (bool).
     Burned(u64),
+    /// Tier of the card (CardTier).
+    Tier(u64),
+    /// Fused card (bool) for a given Token ID.
+    FusedCard(u64),
 }
 
 /// Lightweight card info struct returned by `get_card_info`.
