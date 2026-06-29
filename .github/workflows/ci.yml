@@ -76,25 +76,30 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-node-
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
         working-directory: .
 
       - name: Run ESLint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Run Vitest unit tests
-        run: npm test --run
+        run: pnpm test --run
         env:
           VITE_CONTRACT_ID: ${{ secrets.VITE_CONTRACT_ID || 'CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4' }}
           VITE_RPC_URL: https://soroban-testnet.stellar.org:443
           VITE_NETWORK: testnet
 
       - name: Build production bundle
-        run: npm run build
+        run: pnpm run build
         env:
           VITE_CONTRACT_ID: ${{ secrets.VITE_CONTRACT_ID || 'CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4' }}
           VITE_RPC_URL: https://soroban-testnet.stellar.org:443
@@ -131,8 +136,13 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install
         working-directory: .
 
       - name: Deploy to Vercel Production

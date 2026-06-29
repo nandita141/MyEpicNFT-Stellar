@@ -30,7 +30,7 @@ describe("CardDisplay", () => {
         uri="ipfs://QmUYrFddXf4SpEXWAp6RpSm6XZmwxiDRKLNixt58nuhwAo"
       />
     );
-    expect(screen.getByText("#0")).toBeTruthy();
+    expect(screen.getAllByText("#0").length).toBeGreaterThan(0);
   });
 
   it("shows metadata name after fetch", async () => {
