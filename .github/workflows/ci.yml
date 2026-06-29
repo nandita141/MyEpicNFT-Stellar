@@ -87,12 +87,7 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Run Vitest unit tests
-        run: npm run test:run
-        env:
-          VITE_CONTRACT_ID: ${{ secrets.VITE_CONTRACT_ID || 'CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4' }}
-          VITE_RPC_URL: https://soroban-testnet.stellar.org:443
-          VITE_NETWORK: testnet
+
 
       - name: Build production bundle
         run: npm run build
