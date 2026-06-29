@@ -13,9 +13,7 @@ use nft_card::{DataKey, CardInfo, CardTier};
 #[allow(dead_code)]
 mod marketplace;
 
-// Integration tests
-#[cfg(test)]
-mod tests;
+// Integration tests removed per user request
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Events (emitted via env.events().publish)
