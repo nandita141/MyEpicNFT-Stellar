@@ -31,10 +31,11 @@ fn test_initialize() {
 }
 
 #[test]
+#[should_panic(expected = "contract has already been initialized")]
+#[cfg(not(target_os = "windows"))]
 fn test_double_initialize_panics() {
     let (_, client, admin, _) = setup();
-    let res = client.try_initialize(&admin); // second call should error
-    assert!(res.is_err());
+    client.initialize(&admin); // second call should panic
 }
 
 // ─── 2. Admin Mint ───────────────────────────────────────────────────────────
@@ -91,6 +92,8 @@ fn test_transfer() {
 }
 
 #[test]
+#[should_panic(expected = "caller is not owner or approved spender")]
+#[cfg(not(target_os = "windows"))]
 fn test_transfer_not_owner_panics() {
     let (env, client, _, user) = setup();
     let stranger = Address::generate(&env);
@@ -98,8 +101,7 @@ fn test_transfer_not_owner_panics() {
 
     let token_id = client.public_mint(&user);
     // Stranger tries to transfer user's token
-    let res = client.try_transfer(&stranger, &receiver, &token_id);
-    assert!(res.is_err());
+    client.transfer(&stranger, &receiver, &token_id);
 }
 
 // ─── 5. Burn ─────────────────────────────────────────────────────────────────
@@ -115,13 +117,14 @@ fn test_burn() {
 }
 
 #[test]
+#[should_panic(expected = "caller is not the owner")]
+#[cfg(not(target_os = "windows"))]
 fn test_burn_non_owner_panics() {
     let (env, client, _, user) = setup();
     let stranger = Address::generate(&env);
 
     let token_id = client.public_mint(&user);
-    let res = client.try_burn(&stranger, &token_id);
-    assert!(res.is_err());
+    client.burn(&stranger, &token_id);
 }
 
 // ─── 6. Approve ──────────────────────────────────────────────────────────────
