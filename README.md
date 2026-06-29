@@ -1,6 +1,27 @@
 # 🎴 MyEpicNFT-Stellar
 
-[![CI/CD](https://github.com/nandita141/MyEpicNFT-Stellar/actions/workflows/ci.yml/badge.svg)](https://github.com/nandita141/MyEpicNFT-Stellar/actions)
+---
+
+## ✅ Submission Checklist
+
+- **Public GitHub repository:** [github.com/nandita141/MyEpicNFT-Stellar](https://github.com/nandita141/MyEpicNFT-Stellar)
+- **README with complete documentation:** Yes (See below)
+- **Minimum 10+ meaningful commits:** Yes
+- **Live demo link (Vercel):** [my-epic-nft-stellar-frontend-48b7.vercel.app](https://my-epic-nft-stellar-frontend-48b7.vercel.app/)
+- **Contract deployment address:** `CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4`
+- **Transaction hash for contract interaction:** `[Insert Transaction Hash Here]`
+- **Screenshot showing Mobile responsive UI:** 
+  *(Replace with actual screenshot)*
+  `![Mobile UI]([Insert Image Link Here])`
+- **Screenshot showing CI/CD pipeline running:** 
+  *(Replace with actual screenshot)*
+  `![CI/CD Pipeline]([Insert Image Link Here])`
+- **Screenshot showing Test output with 3+ passing tests:** 
+  *(Replace with actual screenshot)*
+  `![Test Output]([Insert Image Link Here])`
+- **Demo video link (1–2 minutes):** [Watch the Demo](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
+
+---[![CI/CD](https://github.com/nandita141/MyEpicNFT-Stellar/actions/workflows/ci.yml/badge.svg)](https://github.com/nandita141/MyEpicNFT-Stellar/actions)
 [![Stellar](https://img.shields.io/badge/Network-Stellar-blue.svg)](https://stellar.org)
 [![Soroban](https://img.shields.io/badge/Smart%20Contract-Soroban/Rust-orange.svg)](https://soroban.stellar.org)
 [![React](https://img.shields.io/badge/Frontend-React/Vite-61dafb.svg)](https://reactjs.org)
