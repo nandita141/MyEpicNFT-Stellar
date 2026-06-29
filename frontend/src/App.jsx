@@ -29,6 +29,31 @@ import { ShareCard }      from "./components/ShareCard";
 import "./App.css";
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Welcome Screen (Disconnected State)
+// ─────────────────────────────────────────────────────────────────────────────
+function WelcomeScreen({ onConnect }) {
+  return (
+    <div className="welcome-screen" style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center',
+      justifyContent: 'center', minHeight: '60vh', textAlign: 'center', padding: '2rem'
+    }}>
+      <div className="logo-box" style={{ width: '80px', height: '80px', fontSize: '3rem', marginBottom: '1.5rem', margin: '0 auto' }}>
+        🌌
+      </div>
+      <h1 style={{ fontSize: '3rem', marginBottom: '1rem', background: 'linear-gradient(to right, #00f2fe, #4facfe)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+        Welcome to Stellar Card
+      </h1>
+      <p style={{ color: 'var(--text-muted)', fontSize: '1.2rem', maxWidth: '600px', marginBottom: '2.5rem', lineHeight: '1.8' }}>
+        Step into the arena! Mint unique Soroban NFT cards, fuse them into legendary tiers, and battle other players on the Stellar network.
+      </p>
+      <button className="btn-dash-primary" onClick={onConnect} style={{ padding: '1rem 3rem', fontSize: '1.1rem' }}>
+        CONNECT WALLET TO BEGIN
+      </button>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Inner App — uses context
 // ─────────────────────────────────────────────────────────────────────────────
 function AppInner() {
@@ -138,10 +163,15 @@ function AppInner() {
         <Header walletAddress={walletAddress} />
 
         <div className="scroll-content">
-          {PAGES[activeMenu] ?? (
-            <div className="page-container text-center">
+          {!walletAddress ? (
+            <WelcomeScreen onConnect={handleConnect} />
+          ) : PAGES[activeMenu] ? (
+            PAGES[activeMenu]
+          ) : (
+            <div className="page-container text-center" style={{ padding: '10vh 20px' }}>
+              <div style={{ fontSize: '4rem', marginBottom: '1rem', opacity: '0.5' }}>🚧</div>
               <h2>{activeMenu}</h2>
-              <p className="text-gray">This section is coming soon.</p>
+              <p className="text-gray" style={{ marginTop: '10px' }}>This section is currently under construction. Check back soon!</p>
             </div>
           )}
         </div>
