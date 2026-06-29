@@ -8,7 +8,7 @@
 - **README with complete documentation:** Yes (See below)
 - **Minimum 10+ meaningful commits:** Yes
 - **Live demo link (Vercel):** [my-epic-nft-stellar-frontend-48b7.vercel.app](https://my-epic-nft-stellar-frontend-48b7.vercel.app/)
-- **Contract deployment address:** `CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4`
+- **Contract deployment address:** `CB4T7NWMGPN22AI2GZMPJ4OO4W5UR2JFIE46YQ6AVJ7PEE4Z5LOZFX2H`
 - **Transaction hash for contract interaction:** `[Insert Transaction Hash Here]`
 - **Screenshot showing Mobile responsive UI:** 
   *(Replace with actual screenshot)*
@@ -100,7 +100,7 @@ graph TD
 
 ## 📄 Contract API Reference
 
-### NFT Contract — `CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4`
+### NFT Contract — `CB4T7NWMGPN22AI2GZMPJ4OO4W5UR2JFIE46YQ6AVJ7PEE4Z5LOZFX2H`
 
 #### Write Functions (require wallet signature)
 
