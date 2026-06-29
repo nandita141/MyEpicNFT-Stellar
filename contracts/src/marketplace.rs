@@ -1,14 +1,12 @@
-#![no_std]
-
 use soroban_sdk::{
     contract, contractimpl,
-    Address, Env, String,
+    Address, Env,
     token::TokenClient,
 };
 
 // Cross-contract interface — calls our NFT contract
 mod nft_interface {
-    use soroban_sdk::{contractclient, Address, Env, String};
+    use soroban_sdk::{contractclient, Address, Env};
 
     #[contractclient(name = "NftClient")]
     pub trait NftContract {
@@ -45,7 +43,7 @@ pub struct MarketplaceContract;
 impl MarketplaceContract {
 
     /// Initialize marketplace with admin and NFT contract address.
-    pub fn initialize(env: Env, admin: Address, nft_contract: Address) {
+    pub fn init_market(env: Env, admin: Address, nft_contract: Address) {
         if env.storage().instance().has(&MktKey::Admin) {
             panic!("already initialized");
         }

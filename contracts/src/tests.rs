@@ -2,7 +2,7 @@
 
 use super::*;
 use soroban_sdk::{
-    testutils::{Address as _, Events},
+    testutils::Address as _,
     Address, Env, String,
 };
 
@@ -13,12 +13,12 @@ fn setup() -> (Env, StellarCardContractClient<'static>, Address, Address) {
     let contract_id = env.register_contract(None, StellarCardContract);
     let client = StellarCardContractClient::new(&env, &contract_id);
 
-    let admin = Address::generate(&env);
+    let _admin = Address::generate(&env);
     let user  = Address::generate(&env);
 
-    client.initialize(&admin);
+    client.initialize(&_admin);
 
-    (env, client, admin, user)
+    (env, client, _admin, user)
 }
 
 // ─── 1. Initialize ──────────────────────────────────────────────────────────

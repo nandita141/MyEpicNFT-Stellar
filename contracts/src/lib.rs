@@ -1,9 +1,8 @@
 #![no_std]
 
 use soroban_sdk::{
-    contract, contractimpl, contractevent,
-    Address, Env, String, Symbol, symbol_short,
-    vec,
+    contract, contractimpl,
+    Address, Env, String, symbol_short,
 };
 
 mod nft_card;

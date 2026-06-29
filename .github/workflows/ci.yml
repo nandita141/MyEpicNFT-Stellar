@@ -26,8 +26,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@master
         with:
+          toolchain: 1.78.0
           targets: wasm32v1-none
 
       - name: Cache Cargo registry & build
@@ -76,30 +77,25 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
-
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
         working-directory: .
 
       - name: Run ESLint
-        run: pnpm run lint
+        run: npm run lint
 
       - name: Run Vitest unit tests
-        run: pnpm test --run
+        run: npm run test:run
         env:
           VITE_CONTRACT_ID: ${{ secrets.VITE_CONTRACT_ID || 'CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4' }}
           VITE_RPC_URL: https://soroban-testnet.stellar.org:443
           VITE_NETWORK: testnet
 
       - name: Build production bundle
-        run: pnpm run build
+        run: npm run build
         env:
           VITE_CONTRACT_ID: ${{ secrets.VITE_CONTRACT_ID || 'CDQ4LCGKICDNAQKRFGPCTDVDNWUU7JIVXGWKGSPA3A5A44Q45PCB7PD4' }}
           VITE_RPC_URL: https://soroban-testnet.stellar.org:443
@@ -136,13 +132,8 @@ jobs:
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: 8
-
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
         working-directory: .
 
       - name: Deploy to Vercel Production
