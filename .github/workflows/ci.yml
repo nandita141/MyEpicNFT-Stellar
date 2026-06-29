@@ -136,6 +136,11 @@ jobs:
         run: npm install
         working-directory: .
 
+      - name: Prepare Frontend for Vercel
+        run: |
+          cp -r packages frontend/
+          sed -i 's|\.\./packages|./packages|g' frontend/vite.config.js
+
       - name: Deploy to Vercel Production
         run: |
           vercel deploy \
