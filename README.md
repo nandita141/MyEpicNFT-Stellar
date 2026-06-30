@@ -22,8 +22,8 @@
   <img width="1527" height="607" alt="image" src="https://github.com/user-attachments/assets/dd3b2ee8-f9d5-4a7f-bd2f-35e32d34d6f5" />
 
 - **Screenshot showing Test output with 3+ passing tests:** 
-  *(Replace with actual screenshot)*
-  `![Test Output]([Insert Image Link Here])`
+ <img width="1065" height="722" alt="image" src="https://github.com/user-attachments/assets/19f3fc1f-dc0d-414b-ab65-28f359a07ed3" />
+
 - **Demo video link (1–2 minutes):** [Watch the Demo](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
 
 ---[![CI/CD](https://github.com/nandita141/MyEpicNFT-Stellar/actions/workflows/ci.yml/badge.svg)](https://github.com/nandita141/MyEpicNFT-Stellar/actions)
