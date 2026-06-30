@@ -39,8 +39,19 @@
 ### 🔗 [Watch the working Demo here](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
 
 ### 🚀 [Live App on Vercel](https://my-epic-nft-stellar-frontend-48b7.vercel.app)
-
 ---
+#images/
+<img width="1480" height="770" alt="Screenshot 2026-06-30 152325" src="https://github.com/user-attachments/assets/34d832c6-c41f-43f6-84e1-8a3fefad77de" />
+<img width="1536" height="776" alt="Screenshot 2026-06-30 152334" src="https://github.com/user-attachments/assets/34f6a5c1-9346-4175-903f-b195468b5ef4" />
+<img width="1536" height="827" alt="Screenshot 2026-06-30 152342" src="https://github.com/user-attachments/assets/f1986830-3fc3-48c5-a9b5-051fa16f7596" />
+<img width="1536" height="863" alt="Screenshot 2026-06-30 152359" src="https://github.com/user-attachments/assets/d2e04599-5752-4781-963f-f22ada90de9d" />
+<img width="1497" height="795" alt="Screenshot 2026-06-30 152413" src="https://github.com/user-attachments/assets/447ec44c-b5bb-4697-bb70-da205c355e13" />
+<img width="1536" height="798" alt="Screenshot 2026-06-30 152429" src="https://github.com/user-attachments/assets/3ff2307d-3eba-4953-8c89-0d654a7151ad" />
+<img width="1536" height="787" alt="Screenshot 2026-06-30 152457" src="https://github.com/user-attachments/assets/845c8d0c-c70b-45ba-bda3-c1a05f7a6e05" />
+<img width="1472" height="782" alt="Screenshot 2026-06-30 152521" src="https://github.com/user-attachments/assets/942a2614-c7cd-4ce3-8d1e-d31798b5e6ff" />
+<img width="1535" height="803" alt="Screenshot 2026-06-30 152543" src="https://github.com/user-attachments/assets/171d21bc-907d-4351-bdc3-3281707539a4" />
+<img width="1536" height="863" alt="Screenshot 2026-06-30 152602" src="https://github.com/user-attachments/assets/5a3afd22-0563-4bee-be40-0cde97b6560b" />
+
 
 ## ✨ Key Features
 
