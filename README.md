@@ -33,7 +33,8 @@
 
 ## 📺 Project Demo
 
-[![Watch the Demo](image.png)](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
+
+
 
 ### 🔗 [Watch the working Demo here](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
 
