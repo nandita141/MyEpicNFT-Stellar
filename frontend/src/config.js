@@ -6,8 +6,8 @@
 export const CONFIG = {
   /** The deployed Soroban NFT contract ID */
   CONTRACT_ID:
-    import.meta.env.VITE_CONTRACT_ID ||
-    "CB4T7NWMGPN22AI2GZMPJ4OO4W5UR2JFIE46YQ6AVJ7PEE4Z5LOZFX2H",
+    (import.meta.env.VITE_CONTRACT_ID ||
+    "CB4T7NWMGPN22AI2GZMPJ4OO4W5UR2JFIE46YQ6AVJ7PEE4Z5LOZFX2H").trim(),
 
   /** Stellar RPC endpoint */
   RPC_URL:
