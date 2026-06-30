@@ -14,8 +14,9 @@
   *(Replace with actual screenshot)*
   `![Mobile UI]([Insert Image Link Here])`
 - **Screenshot showing CI/CD pipeline running:** 
-  *(Replace with actual screenshot)*
-  `![CI/CD Pipeline]([Insert Image Link Here])`
+  
+  <img width="1527" height="607" alt="image" src="https://github.com/user-attachments/assets/dd3b2ee8-f9d5-4a7f-bd2f-35e32d34d6f5" />
+
 - **Screenshot showing Test output with 3+ passing tests:** 
   *(Replace with actual screenshot)*
   `![Test Output]([Insert Image Link Here])`
