@@ -18,11 +18,10 @@
 
 
 - **Screenshot showing CI/CD pipeline running:**
-- 
+- <img width="1197" height="468" alt="image" src="https://github.com/user-attachments/assets/8fea50d3-c8cf-41d9-9e40-1002c7f2fb0b" />
 
-
-- **Screenshot showing Test output with 3+ passing tests:** 
-  
+- **Screenshot showing Test output with 3+ passing tests:**
+  <img width="765" height="557" alt="image" src="https://github.com/user-attachments/assets/ed1b5b5e-ac9f-4f5c-8a4e-36f2998ada98" />
 
 - **Demo video link (1–2 minutes):** [Watch the Demo]()
 
