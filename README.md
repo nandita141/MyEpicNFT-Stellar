@@ -19,10 +19,11 @@
 
 - **Screenshot showing CI/CD pipeline running:** 
   
-  <img width="1527" height="607" alt="image" src="https://github.com/user-attachments/assets/dd3b2ee8-f9d5-4a7f-bd2f-35e32d34d6f5" />
+  <img width="1308" height="421" alt="image" src="https://github.com/user-attachments/assets/00e05836-da0b-4405-9c8a-f039e840b382" />
+
 
 - **Screenshot showing Test output with 3+ passing tests:** 
- <img width="1065" height="722" alt="image" src="https://github.com/user-attachments/assets/19f3fc1f-dc0d-414b-ab65-28f359a07ed3" />
+ <img width="1065" height="722" alt="image" src="https://github.com/user-attachments/assets/19f3fc1f-dc0d-414b-ab65-28f359a07ed3" >
 
 - **Demo video link (1–2 minutes):** [Watch the Demo](https://drive.google.com/file/d/1Xkpl9Ls5iMyuafxIwtyEXzn8LPR3ZIYO/view?usp=sharing)
 
